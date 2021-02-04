@@ -166,12 +166,9 @@ odoo.define('dhx_gantt.GanttModel', function (require) {
             }
 
             var formatFunc = gantt.date.str_to_date("%d-%m-%Y %h:%i");
-            var date_start = formatFunc(data.start_date);
-            console.log('formating');
-            console.log(data.start_date);
-            console.log('to');
-            console.log(date_start);
-            values[this.map_date_start] = JSON.stringify(date_start);
+            var formatFunc2 = gantt.date.date_to_str("%Y-%m-%d %h:%i:%s");
+            var date_start = formatFunc2(formatFunc(data.start_date));
+            values[this.map_date_start] = date_start;
             // console.log('time');
             // console.log(time.datetime_to_str(new Date("2019-09-07T20:00:00.000Z")));
             args.push(id);
@@ -215,6 +212,26 @@ odoo.define('dhx_gantt.GanttModel', function (require) {
                 args: args,
             });
         },
+        formatDate: function(date) {
+              console.log(date);
+
+            var d = new Date(date),
+              month = "" + (d.getMonth() + 1),
+              day = "" + d.getDate(),
+              year = d.getFullYear(),
+              hour = "" + (d.getHours() + 1),
+              minute = "" + d.getMinutes(),
+              seconds = d.getSeconds();
+              console.log(date);
+
+                if (month.length < 2) month = "0" + month;
+                if (day.length < 2) day = "0" + day;
+                if (hour.length < 2) hour = "0" + hour;
+                if (minute.length < 2) minute = "0" + minute;
+                if (seconds.length < 2) seconds = "0" + seconds;
+            console.log([year, month, day].join("-") + " " + [hour,  minute, seconds].join(":"));
+            return [year, month, day].join("-") + " " + [hour,  minute, seconds].join(":");
+          },
         getCriticalPath: function(){
             return this._rpc({
                 model: this.modelName,

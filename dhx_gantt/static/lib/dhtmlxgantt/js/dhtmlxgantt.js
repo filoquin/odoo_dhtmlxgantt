@@ -6518,7 +6518,7 @@ module.exports = function () {
         // 		date_scale: "%d %M",
         time_step: 60,
         duration_step: 1,
-        task_date: "%d %F %Y",
+        task_date: "%Y-%M-%d",
         time_picker: "%H:%i",
         task_attribute: "task_id",
         link_attribute: "link_id",
